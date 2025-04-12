@@ -1,26 +1,77 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Phone Hacked</title>
-    <style>
-      body {
-        background-color: black;
-        color: lime;
-        font-family: monospace;
-        font-size: 18px;
-        padding: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>** WARNING **</h1>
-    <p>Accessing phone data...</p>
-    <p>Opening camera...</p>
-    <p>Reading contacts...</p>
-    <p><b style="color: red;">Your phone has been hacked!</b></p>
-    <script>
+<head>
+  <title>Hacking...</title>
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: monospace;
+      text-align: center;
+      padding-top: 100px;
+    }
+    h1 {
+      font-size: 3em;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+  <script>
+    let flashes = 0;
+
+    function startPrank() {
+      alert("Warning! Unauthorized access detected.");
+
+      // Disable back button
+      history.pushState(null, "", location.href);
+      window.onpopstate = function () {
+        history.pushState(null, "", location.href);
+        alert("Exit Denied! Phone still under access.");
+      };
+
+      // Start flashing effect
+      let flashInterval = setInterval(() => {
+        document.body.style.backgroundColor =
+          document.body.style.backgroundColor === "black" ? "white" : "black";
+        flashes++;
+        if (flashes >= 10) {
+          clearInterval(flashInterval);
+          showHackedMessage();
+        }
+      }, 200);
+    }
+
+    function showHackedMessage() {
+      document.body.innerHTML = `
+        <h1>PHONE HACKED</h1>
+        <p>Accessing gallery...</p>
+        <p>Sending SMS to contacts...</p>
+        <p>Uploading files to server...</p>
+      `;
+      setTimeout(() => {
+        alert("Gallery accessed.");
+        alert("Camera ON.");
+        alert("Uploading complete.");
+        fakeFreeze();
+      }, 2000);
+    }
+
+    function fakeFreeze() {
       setInterval(() => {
-        alert("Phone compromised! Disconnect now!");
-      }, 3000);
-    </script>
-  </body>
+        alert("Exit is blocked. Tracking in progress...");
+      }, 5000);
+    }
+
+    // Prevent right-click menu
+    window.addEventListener("contextmenu", e => e.preventDefault());
+
+    // Auto start on load
+    window.onload = startPrank;
+  </script>
+</head>
+<body>
+  <h1>HACKING...</h1>
+</body>
 </html>
