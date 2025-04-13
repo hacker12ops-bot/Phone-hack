@@ -1,77 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hacking...</title>
+  <title>Phone Hacked</title>
   <style>
     body {
       background-color: black;
-      color: red;
+      color: lime;
       font-family: monospace;
-      text-align: center;
-      padding-top: 100px;
+      font-size: 16px;
+      padding: 20px;
+      overflow: hidden;
     }
-    h1 {
-      font-size: 3em;
+    #terminal {
+      white-space: pre-wrap;
+      height: 90vh;
+      overflow-y: auto;
+    }
+    .red {
+      color: red;
+      font-size: 20px;
       animation: blink 1s infinite;
     }
     @keyframes blink {
+      0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
   </style>
-  <script>
-    let flashes = 0;
-
-    function startPrank() {
-      alert("Warning! Unauthorized access detected.");
-
-      // Disable back button
-      history.pushState(null, "", location.href);
-      window.onpopstate = function () {
-        history.pushState(null, "", location.href);
-        alert("Exit Denied! Phone still under access.");
-      };
-
-      // Start flashing effect
-      let flashInterval = setInterval(() => {
-        document.body.style.backgroundColor =
-          document.body.style.backgroundColor === "black" ? "white" : "black";
-        flashes++;
-        if (flashes >= 10) {
-          clearInterval(flashInterval);
-          showHackedMessage();
-        }
-      }, 200);
-    }
-
-    function showHackedMessage() {
-      document.body.innerHTML = `
-        <h1>PHONE HACKED</h1>
-        <p>Accessing gallery...</p>
-        <p>Sending SMS to contacts...</p>
-        <p>Uploading files to server...</p>
-      `;
-      setTimeout(() => {
-        alert("Gallery accessed.");
-        alert("Camera ON.");
-        alert("Uploading complete.");
-        fakeFreeze();
-      }, 2000);
-    }
-
-    function fakeFreeze() {
-      setInterval(() => {
-        alert("Exit is blocked. Tracking in progress...");
-      }, 5000);
-    }
-
-    // Prevent right-click menu
-    window.addEventListener("contextmenu", e => e.preventDefault());
-
-    // Auto start on load
-    window.onload = startPrank;
-  </script>
 </head>
 <body>
-  <h1>HACKING...</h1>
+  <div id="terminal">Initializing Hack Tool...</div>
+  <p class="red">DATA TRANSFER IN PROGRESS...</p>
+
+  <script>
+    // Prevent back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      history.pushState(null, null, location.href);
+    };
+
+    // Request fullscreen
+    function goFullScreen() {
+      let el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    }
+
+    goFullScreen();
+
+    // Fake data transfer effect
+    let terminal = document.getElementById("terminal");
+    let count = 0;
+    setInterval(() => {
+      terminal.innerText += "\nTransferring file_" + count + ".dat ...";
+      terminal.scrollTop = terminal.scrollHeight;
+      count++;
+    }, 200);
+
+    // Flashlight + vibration + sound (optional)
+    if (navigator.vibrate) {
+      setInterval(() => {
+        navigator.vibrate([200, 100, 200]);
+      }, 1000);
+    }
+
+    // Optional: Add beep sound
+    const beep = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg");
+    beep.loop = true;
+    beep.play().catch(() => {}); // catch autoplay block
+  </script>
 </body>
 </html>
